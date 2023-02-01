@@ -1,11 +1,14 @@
 package ua.shamray.myblogspringbootv1.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ua.shamray.myblogspringbootv1.dto.PostDTO;
 import ua.shamray.myblogspringbootv1.mapper.PostMapper;
+import ua.shamray.myblogspringbootv1.model.Account;
 import ua.shamray.myblogspringbootv1.model.Post;
 import ua.shamray.myblogspringbootv1.repository.PostRepository;
+import ua.shamray.myblogspringbootv1.service.AccountService;
 import ua.shamray.myblogspringbootv1.service.PostService;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -16,6 +19,7 @@ import java.util.Optional;
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final PostMapper postMapper;
+    private final AccountService accountService;
 
     @Override
     public List<PostDTO> getAll(){
@@ -62,10 +66,12 @@ public class PostServiceImpl implements PostService {
         return postRepository.findById(id);
     }
 
+    //is it ok to inject accountService here?
     @Override
-    public Post saveNewPost(PostDTO postDTO){
+    public PostDTO saveNewPost(PostDTO postDTO){
         Post post = dtoToEntity(postDTO);
-        return postRepository.save(post);
+        post.setAccount(accountService.getCurrentAuthenticatedAccount());
+        return entityToDTO(postRepository.save(post));
     }
     @Override
     public Post save(Post post) {

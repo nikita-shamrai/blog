@@ -1,9 +1,11 @@
 package ua.shamray.myblogspringbootv1.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.shamray.myblogspringbootv1.dto.AccountDTO;
+import ua.shamray.myblogspringbootv1.exception.ResourceNotFoundException;
 import ua.shamray.myblogspringbootv1.mapper.AccountMapper;
 import ua.shamray.myblogspringbootv1.model.Account;
 import ua.shamray.myblogspringbootv1.repository.AccountRepository;
@@ -81,6 +83,14 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Optional<Account> findByEmail(String email) {
         return accountRepository.findByEmail(email);
+    }
+
+    //TEST
+    @Override
+    public Account getCurrentAuthenticatedAccount() {
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        return accountRepository.findByEmail(userName).orElseThrow(() -> new SecurityException(
+                "SecurityContextHolder getName error. Check user authentication."));
     }
 
 

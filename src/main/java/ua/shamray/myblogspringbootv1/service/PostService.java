@@ -9,7 +9,7 @@ public interface PostService {
 
     List<PostDTO> getAll();
 
-    Post saveNewPost(PostDTO postDTO);
+    PostDTO saveNewPost(PostDTO postDTO);
 
     Post save(Post post);
 

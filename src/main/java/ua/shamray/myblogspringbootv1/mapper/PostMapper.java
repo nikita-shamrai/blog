@@ -23,10 +23,11 @@ public abstract class PostMapper {
     @Mapping(target = "accountDTO", expression = "java(accountMapper.entityToDTO(post.getAccount()))")
     public abstract PostDTO entityToDTO(Post post);
 
-    @Mapping(target = "account",
+    /*@Mapping(target = "account",
              expression = "java(accountService.getById(postDTO.getAccountDTO().getId())" +
-                        ".orElseThrow(() ->  new IllegalArgumentException(\"Account with id=\" + postDTO.getAccountDTO().getId() + \" not found.\")))")
+                        ".orElseThrow(() ->  new IllegalArgumentException(\"Account with id=\" + postDTO.getAccountDTO().getId() + \" not found.\")))")*/
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "account", ignore = true)
     public abstract Post dtoToEntity(PostDTO postDTO);
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "createTime", ignore = true)

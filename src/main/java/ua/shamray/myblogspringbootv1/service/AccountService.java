@@ -17,5 +17,6 @@ public interface AccountService {
     Boolean accountExists(Long id);
     Boolean accountExists(String email);
     Optional<Account> findByEmail(String email);
+    Account getCurrentAuthenticatedAccount();
 
 }
