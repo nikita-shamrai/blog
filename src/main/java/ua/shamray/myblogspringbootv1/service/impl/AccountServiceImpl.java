@@ -5,7 +5,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.shamray.myblogspringbootv1.dto.AccountDTO;
-import ua.shamray.myblogspringbootv1.exception.ResourceNotFoundException;
 import ua.shamray.myblogspringbootv1.mapper.AccountMapper;
 import ua.shamray.myblogspringbootv1.model.Account;
 import ua.shamray.myblogspringbootv1.repository.AccountRepository;
@@ -31,11 +30,6 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account save(Account account) {
-        return accountRepository.save(account);
-    }
-
-    @Override
     public Account saveNewUser(Account account) {
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         if(account.getRoles().isEmpty()) {
@@ -45,7 +39,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account setUserAsAdmin(Account account) {
+    public void setUserAsAdmin(Account account) {
         accountRepository
                 .findById(account.getId())
                 .ifPresentOrElse(
@@ -57,22 +51,6 @@ public class AccountServiceImpl implements AccountService {
                             throw new IllegalArgumentException("User not found.");
                         }
                 );
-        return account;
-    }
-
-    @Override
-    public Optional<Account> getById(Long id) {
-        return accountRepository.findById(id);
-    }
-
-    @Override
-    public AccountDTO toDto(Account account){
-        return accountMapper.entityToDTO(account);
-    }
-
-    @Override
-    public Boolean accountExists(Long id) {
-        return accountRepository.findById(id).isPresent();
     }
 
     @Override

@@ -10,6 +10,7 @@ import ua.shamray.myblogspringbootv1.model.Post;
 import ua.shamray.myblogspringbootv1.service.AccountService;
 import ua.shamray.myblogspringbootv1.service.PostService;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,6 +27,18 @@ public class UserPostController {
     @GetMapping("/{id}")
     public PostDTO getPostById(@PathVariable Long id){
       return postService.getDTOById(id);
+    }
+
+    //is it Ok to map entity to dto here? If no - where?
+    @GetMapping("/my")
+    @PreAuthorize("isAuthenticated()")
+    public List<PostDTO> getAllUserPosts(){
+        return accountService
+                .getCurrentAuthenticatedAccount()
+                .getPostList()
+                .stream()
+                .map(postService::entityToDTO)
+                .collect(Collectors.toList());
     }
 
     @PostMapping("/create")
@@ -52,8 +65,6 @@ public class UserPostController {
         postService.deleteById(id);
         return getAllPosts();
     }
-
-    //TODO: Add show my posts
 
     //Is it Ok to extract private methods in controller?
     private boolean isAuthenticatedUserAuthorOfPost(Long postId) {
