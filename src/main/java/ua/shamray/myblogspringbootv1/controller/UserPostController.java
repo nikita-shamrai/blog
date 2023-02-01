@@ -2,10 +2,7 @@ package ua.shamray.myblogspringbootv1.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.expression.AccessException;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import ua.shamray.myblogspringbootv1.dto.PostDTO;
 import ua.shamray.myblogspringbootv1.exception.ResourceNotFoundException;
@@ -40,24 +37,29 @@ public class UserPostController {
     @PutMapping("/edit/{id}")
     @PreAuthorize("isAuthenticated()")
     public PostDTO editPost(@PathVariable Long id, @RequestBody PostDTO postDTO) throws AccessException {
-        String usernameAuthenticated = SecurityContextHolder.getContext().getAuthentication().getName();
-        Post post = postService.getById(id).orElseThrow(() -> new ResourceNotFoundException("Post with id=" + id + " doesn't exists"));
-        boolean userAuthenticatedIsPostAuthor = post.getAccount().getEmail().equals(usernameAuthenticated);
-        if (!userAuthenticatedIsPostAuthor) {
+        if (!isAuthenticatedUserAuthorOfPost(id)) {
             throw new AccessException("You are not author of post id=" + id);
         }
         return postService.updatePost(id, postDTO);
     }
 
     @DeleteMapping("delete/{id}")
-    @Secured({"ROLE_ADMIN"})
-    public List<PostDTO> deletePostById(@PathVariable Long id){
-        //NO CHECK IF ACCOUNT EXISTS!
-        Boolean postDeleteSuccess = postService.deleteById(id);
-        if (!postDeleteSuccess) {
-            throw new ResourceNotFoundException("Post with id=" + id + " not found.");
+    @PreAuthorize("isAuthenticated()")
+    public List<PostDTO> deletePostById(@PathVariable Long id) throws AccessException {
+        if (!isAuthenticatedUserAuthorOfPost(id)) {
+            throw new AccessException("You are not author of post id=" + id);
         }
+        postService.deleteById(id);
         return getAllPosts();
+    }
+
+    //TODO: Add show my posts
+
+    //Is it Ok to extract private methods in controller?
+    private boolean isAuthenticatedUserAuthorOfPost(Long postId) {
+        String usernameAuthenticated = accountService.getCurrentAuthenticatedAccount().getEmail();
+        Post post = postService.getById(postId).orElseThrow(() -> new ResourceNotFoundException("Post with postId=" + postId + " doesn't exists"));
+        return post.getAccount().getEmail().equals(usernameAuthenticated);
     }
 
 

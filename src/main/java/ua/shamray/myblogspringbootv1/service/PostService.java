@@ -23,6 +23,6 @@ public interface PostService {
 
     PostDTO updatePost(Long id, PostDTO postDTO);
 
-    Boolean deleteById(Long id);
+    void deleteById(Long id);
 
 }

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import ua.shamray.myblogspringbootv1.dto.PostDTO;
+import ua.shamray.myblogspringbootv1.exception.ResourceNotFoundException;
 import ua.shamray.myblogspringbootv1.mapper.PostMapper;
 import ua.shamray.myblogspringbootv1.model.Account;
 import ua.shamray.myblogspringbootv1.model.Post;
@@ -37,28 +38,21 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public PostDTO updatePost(Long id, PostDTO postDTO) {
-        Optional<Post> post = postRepository.findById(id);
-        if (post.isEmpty()){
-            throw new NoSuchElementException("Post with id=" + id + " doesn't exists");
-        }
-        Post updatedPost = postMapper.mapEntityWithDTO(post.get(), postDTO);
+        Post post = postRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Post with id=" + id + " doesn't exists"));
+        Post updatedPost = postMapper.mapEntityWithDTO(post, postDTO);
         return entityToDTO(postRepository.save(updatedPost));
     }
 
     @Override
-    public Boolean deleteById(Long id) {
-        try {
-            postRepository.deleteById(id);
-        } catch (Exception e) {
-            return false;
-        }
-        return postRepository.findById(id).isEmpty();
+    public void deleteById(Long id) {
+        postRepository.deleteById(id);
     }
 
     @Override
     public PostDTO getDTOById(Long id) {
         Optional<Post> post = postRepository.findById(id);
-        return entityToDTO(post.orElseThrow(() -> new NoSuchElementException("Post with id=" + id + " doesn't exists")));
+        return entityToDTO(post.orElseThrow(() -> new ResourceNotFoundException("Post with id=" + id + " doesn't exists")));
     }
 
     @Override
