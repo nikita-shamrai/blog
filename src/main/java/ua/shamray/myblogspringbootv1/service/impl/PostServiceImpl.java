@@ -39,7 +39,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostDTO updatePost(Long id, PostDTO postDTO) {
         Post post = postRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Post with id=" + id + " doesn't exists"));
+                () -> new ResourceNotFoundException("Post with id=" + id + " doesn't exist"));
         Post updatedPost = postMapper.mapEntityWithDTO(post, postDTO);
         return entityToDTO(postRepository.save(updatedPost));
     }
@@ -52,7 +52,7 @@ public class PostServiceImpl implements PostService {
     @Override
     public PostDTO getDTOById(Long id) {
         Optional<Post> post = postRepository.findById(id);
-        return entityToDTO(post.orElseThrow(() -> new ResourceNotFoundException("Post with id=" + id + " doesn't exists")));
+        return entityToDTO(post.orElseThrow(() -> new ResourceNotFoundException("Post with id=" + id + " doesn't exist")));
     }
 
     @Override
