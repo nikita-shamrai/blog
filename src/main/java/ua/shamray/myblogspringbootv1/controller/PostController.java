@@ -3,6 +3,7 @@ package ua.shamray.myblogspringbootv1.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.expression.AccessException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ua.shamray.myblogspringbootv1.dto.PostDTO;
@@ -23,53 +24,54 @@ public class PostController {
     private final AuthenticationService authenticationService;
 
     @GetMapping()
-    public List<PostDTO> getAllPosts(){
-        return postService.getAll();
+    public ResponseEntity<List<PostDTO>> getAllPosts(){
+        return ResponseEntity.ok(postService.getAll());
     }
 
     @GetMapping("/{id}")
-    public PostDTO getPostById(@PathVariable Long id){
-      return postService.getDTOById(id);
+    public ResponseEntity<PostDTO> getPostById(@PathVariable Long id){
+      return ResponseEntity.ok(postService.getDTOById(id));
     }
 
     //is it Ok to map entity to dto here? If no - where?
     @GetMapping("/my")
     @PreAuthorize("isAuthenticated()")
-    public List<PostDTO> getAllUserPosts(){
-        return accountService
+    public ResponseEntity<List<PostDTO>> getAllUserPosts(){
+        List<PostDTO> userPosts = accountService
                 .getCurrentAuthenticatedAccount()
                 .getPostList()
                 .stream()
                 .map(postService::entityToDTO)
                 .collect(Collectors.toList());
+        return ResponseEntity.ok(userPosts);
     }
 
     @PostMapping("/create")
     @PreAuthorize("isAuthenticated()")
-    public PostDTO createPost(@RequestBody PostDTO postDTO) {
-        return postService.saveNewPost(postDTO);
+    public ResponseEntity<PostDTO> createPost(@RequestBody PostDTO postDTO) {
+        return ResponseEntity.ok(postService.saveNewPost(postDTO));
     }
 
     //is it Ok or can I optimize this?
     @PutMapping("/edit/{id}")
     @PreAuthorize("isAuthenticated()")
-    public PostDTO editPost(@PathVariable Long id, @RequestBody PostDTO postDTO, HttpServletRequest request) throws AccessException {
+    public ResponseEntity<PostDTO> editPost(@PathVariable Long id, @RequestBody PostDTO postDTO, HttpServletRequest request) throws AccessException {
         if(postService.getById(id).isEmpty()){
             throw new ResourceNotFoundException("Post with postId=" + id + " doesn't exist");
         }
         if (request.isUserInRole("ROLE_ADMIN")){
-            return postService.updatePost(id, postDTO);
+            return ResponseEntity.ok(postService.updatePost(id, postDTO));
         }
         if (!authenticationService.isAuthenticatedUserAuthorOfPost(id)) {
             throw new AccessException("You are not author of post id=" + id);
         }
-        return postService.updatePost(id, postDTO);
+        return ResponseEntity.ok(postService.updatePost(id, postDTO));
     }
 
     //is it Ok or can I optimize this?
     @DeleteMapping("delete/{id}")
     @PreAuthorize("isAuthenticated()")
-    public List<PostDTO> deletePostById(@PathVariable Long id, HttpServletRequest request) throws AccessException {
+    public ResponseEntity<List<PostDTO>> deletePostById(@PathVariable Long id, HttpServletRequest request) throws AccessException {
         if(postService.getById(id).isEmpty()){
             throw new ResourceNotFoundException("Post with postId=" + id + " doesn't exist");
         }

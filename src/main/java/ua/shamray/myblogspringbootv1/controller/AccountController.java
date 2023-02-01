@@ -9,7 +9,7 @@ import ua.shamray.myblogspringbootv1.service.AccountService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/blog")
-public class AuthenticationController {
+public class AccountController {
 
     private final AccountService accountService;
 

@@ -60,7 +60,7 @@ public class PostServiceImpl implements PostService {
         return postRepository.findById(id);
     }
 
-    //is it ok to inject accountService here?
+    //is it Ok to inject accountService here?
     @Override
     public PostDTO saveNewPost(PostDTO postDTO){
         Post post = dtoToEntity(postDTO);

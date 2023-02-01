@@ -19,7 +19,6 @@ import java.util.Optional;
 public class AccountServiceImpl implements AccountService {
 
     private final AccountRepository accountRepository;
-    private final AccountMapper accountMapper;
     private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
 
