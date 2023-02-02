@@ -1,5 +1,6 @@
 package ua.shamray.myblogspringbootv1.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,7 @@ public class AccountController {
     private final AccountService accountService;
 
     @PostMapping("/register")
-    public ResponseEntity<AccountDTO> registerNewAccount(@RequestBody AccountDTO accountDTO){
+    public ResponseEntity<AccountDTO> registerNewAccount(@Valid @RequestBody AccountDTO accountDTO){
         if (accountService.accountExists(accountDTO.getEmail())) {
             throw new IllegalArgumentException("Account with email " + accountDTO.getEmail() + " already exists.");
         }

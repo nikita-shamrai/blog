@@ -7,6 +7,7 @@ import ua.shamray.myblogspringbootv1.model.Role;
 import ua.shamray.myblogspringbootv1.repository.RoleRepository;
 import ua.shamray.myblogspringbootv1.service.RoleService;
 
+import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -19,6 +20,7 @@ public class RoleServiceImpl implements RoleService {
     public Account setRoleAsUser(Account account) {
         Optional<Role> roleUserOptional = roleRepository.findById("ROLE_USER");
         Role roleUser = roleUserOptional.orElseThrow(() -> new NoSuchElementException("Role User not found"));
+        account.setRoles(new HashSet<>());
         account.getRoles().add(roleUser);
         return account;
     }

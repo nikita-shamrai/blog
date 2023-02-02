@@ -12,6 +12,7 @@ import ua.shamray.myblogspringbootv1.service.AccountService;
 import ua.shamray.myblogspringbootv1.service.RoleService;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -30,7 +31,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account saveNewUser(Account account) {
         account.setPassword(passwordEncoder.encode(account.getPassword()));
-        if(account.getRoles().isEmpty()) {
+        if(Objects.isNull(account.getRoles())) {
             roleService.setRoleAsUser(account);
         }
         return accountRepository.save(account);
