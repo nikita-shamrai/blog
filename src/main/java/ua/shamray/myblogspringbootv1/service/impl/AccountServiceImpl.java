@@ -17,11 +17,10 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
-
     private final AccountRepository accountRepository;
     private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
-
+    private final AccountMapper accountMapper;
 
     @Override
     public List<Account> getAll() {
@@ -35,6 +34,13 @@ public class AccountServiceImpl implements AccountService {
             roleService.setRoleAsUser(account);
         }
         return accountRepository.save(account);
+    }
+
+    @Override
+    public AccountDTO saveNewUser(AccountDTO accountDTO) {
+        Account account = dtoToEntity(accountDTO);
+        Account savedAccount = saveNewUser(account);
+        return entityToDTO(savedAccount);
     }
 
     @Override
@@ -70,5 +76,13 @@ public class AccountServiceImpl implements AccountService {
                 "SecurityContextHolder getName error. Check user authentication."));
     }
 
+    @Override
+    public Account dtoToEntity(AccountDTO accountDTO) {
+        return accountMapper.dtoToEntity(accountDTO);
+    }
+    @Override
+    public AccountDTO entityToDTO(Account account) {
+        return accountMapper.entityToDTO(account);
+    }
 
 }

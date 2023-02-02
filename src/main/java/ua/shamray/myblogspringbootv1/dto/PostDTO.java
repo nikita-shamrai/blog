@@ -14,7 +14,7 @@ public class PostDTO {
     private Long id;
 
     @JsonProperty("account")
-    private AccountDTO accountDTO;
+    private AccountViewer accountViewer;
 
     @NotNull(message = "post title is null")
     @NotBlank(message = "post title is blank")

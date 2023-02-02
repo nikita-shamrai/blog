@@ -9,7 +9,6 @@ import ua.shamray.myblogspringbootv1.dto.PostDTO;
 import ua.shamray.myblogspringbootv1.model.Post;
 import ua.shamray.myblogspringbootv1.service.AccountService;
 
-import java.util.NoSuchElementException;
 
 @Mapper(componentModel = "spring",
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
@@ -20,7 +19,7 @@ public abstract class PostMapper {
     @Autowired
     protected AccountService accountService;
 
-    @Mapping(target = "accountDTO", expression = "java(accountMapper.entityToDTO(post.getAccount()))")
+    @Mapping(target = "accountViewer", expression = "java(accountMapper.entityToViewer(post.getAccount()))")
     public abstract PostDTO entityToDTO(Post post);
 
     /*@Mapping(target = "account",
