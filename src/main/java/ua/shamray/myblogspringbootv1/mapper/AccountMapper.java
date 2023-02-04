@@ -12,7 +12,6 @@ public interface AccountMapper {
     AccountDTO entityToDTO(Account account);
     @Mapping(target = "id", ignore = true)
     Account dtoToEntity(AccountDTO accountDTO);
-
     AccountViewer entityToViewer(Account account);
 
 }

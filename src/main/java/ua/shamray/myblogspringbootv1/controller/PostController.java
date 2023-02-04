@@ -48,7 +48,6 @@ public class PostController {
         return ResponseEntity.ok(userPosts);
     }
 
-    //TODO: Разобраться с РеспонсЭнтити. Сделать логин и регистрацию. Разобраться с отображаемым контентом пользователю. Тестирование.
     @PostMapping("/create")
     @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.CREATED)

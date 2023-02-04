@@ -22,9 +22,6 @@ public abstract class PostMapper {
     @Mapping(target = "accountViewer", expression = "java(accountMapper.entityToViewer(post.getAccount()))")
     public abstract PostDTO entityToDTO(Post post);
 
-    /*@Mapping(target = "account",
-             expression = "java(accountService.getById(postDTO.getAccountDTO().getId())" +
-                        ".orElseThrow(() ->  new IllegalArgumentException(\"Account with id=\" + postDTO.getAccountDTO().getId() + \" not found.\")))")*/
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "account", ignore = true)
     public abstract Post dtoToEntity(PostDTO postDTO);

@@ -28,7 +28,6 @@ public class Account {
 
     private String password;
 
-    //@JsonManagedReference
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
     private List<Post> postList = new ArrayList<>();
 

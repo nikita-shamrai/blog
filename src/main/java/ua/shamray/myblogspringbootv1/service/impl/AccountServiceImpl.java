@@ -69,7 +69,6 @@ public class AccountServiceImpl implements AccountService {
         return accountRepository.findByEmail(email);
     }
 
-    //TEST
     @Override
     public Account getCurrentAuthenticatedAccount() {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();

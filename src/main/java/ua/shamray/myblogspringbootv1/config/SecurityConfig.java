@@ -3,16 +3,13 @@ package ua.shamray.myblogspringbootv1.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 
 @Configuration
 @EnableWebSecurity
@@ -24,9 +21,8 @@ public class SecurityConfig {
     private static final String[] WHITELIST = {
             "/blog/posts",
             "/blog/register",
-            "/blog/login" //УДАЛИТЬ?
+            "/blog/login"
     };
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
@@ -36,29 +32,10 @@ public class SecurityConfig {
                     auth.requestMatchers(HttpMethod.GET, "/blog/posts/**").permitAll();
                     auth.anyRequest().authenticated();
                 })
-                .formLogin(login -> {
-                    try {
-                        //TODO Разобраться с ЛогинПейдж чтоб была дефолтная
-                        login
-                                .loginPage("/blog/login")
-                                .loginProcessingUrl("/blog/login-process")
-                                .usernameParameter("email")
-                                .passwordParameter("password")
-                                .defaultSuccessUrl("/blog/posts", true)
-                                .failureUrl("/blog/login?error")
-                                .permitAll()
-                                .and()
-                                .logout()
-                                .logoutUrl("/blog/logout")
-                                .logoutSuccessUrl("/blog/login?logout")
-                                .permitAll();
-                    } catch (Exception e) {
-                        throw new RuntimeException(e);
-                    }
-
-                })
-                .httpBasic()
+                .formLogin()
+                .defaultSuccessUrl("/blog/posts/my")
                 .and()
+                .httpBasic(Customizer.withDefaults())
                 .build();
     }
 

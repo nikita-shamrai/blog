@@ -8,13 +8,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-
 @Entity
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-public class Role /*implements Serializable*/ {
+public class Role {
 
     @Id
     @Column(length = 16)

@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @ControllerAdvice
 @RequiredArgsConstructor
-public class GlobalExceptionHandler /*extends ResponseEntityExceptionHandler*/ {
+public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = {ApiRequestException.class})
     public ResponseEntity<?> apiExceptionHandler(ApiRequestException e){
