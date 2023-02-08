@@ -15,9 +15,6 @@ public class AccountController {
 
     @PostMapping("/register")
     public ResponseEntity<AccountDTO> registerNewAccount(@Valid @RequestBody AccountDTO accountDTO){
-        if (accountService.accountExists(accountDTO.getEmail())) {
-            throw new IllegalArgumentException("Account with email " + accountDTO.getEmail() + " already exists.");
-        }
         AccountDTO newUser = accountService.saveNewUser(accountDTO);
         return ResponseEntity.ok(newUser);
     }

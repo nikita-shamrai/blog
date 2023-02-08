@@ -30,7 +30,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account saveNewUser(Account account) {
-        account.setPassword(passwordEncoder.encode(account.getPassword()));
+        String encodedPass = passwordEncoder.encode(account.getPassword());
+        account.setPassword(encodedPass);
         if(Objects.isNull(account.getRoles())) {
             roleService.setRoleAsUser(account);
         }
@@ -38,7 +39,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountDTO saveNewUser(AccountDTO accountDTO) {
+    public AccountDTO saveNewUser(AccountDTO accountDTO) throws IllegalArgumentException {
+        if (accountExists(accountDTO.getEmail())) {
+            throw new IllegalArgumentException("Account with email " + accountDTO.getEmail() + " already exists.");
+        }
         Account account = dtoToEntity(accountDTO);
         Account savedAccount = saveNewUser(account);
         return entityToDTO(savedAccount);

@@ -2,6 +2,7 @@ package ua.shamray.myblogspringbootv1.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import ua.shamray.myblogspringbootv1.model.Account;
 import ua.shamray.myblogspringbootv1.model.Role;
@@ -13,6 +14,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+@ConditionalOnProperty(
+        prefix = "command.line.runner",
+        value = "enabled",
+        havingValue = "true",
+        matchIfMissing = true)
 @Component
 @RequiredArgsConstructor
 public class CommandLineAppStartupRunner implements CommandLineRunner {

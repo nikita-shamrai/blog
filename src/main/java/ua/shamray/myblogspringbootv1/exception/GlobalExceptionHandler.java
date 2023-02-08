@@ -27,6 +27,13 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(apiException, httpStatus);
     }
 
+  /*  @ExceptionHandler(value = {IllegalArgumentException.class})
+    public ResponseEntity<?> illegalArgumentExceptionHandler(IllegalArgumentException e){
+        HttpStatus httpStatus = HttpStatus.FORBIDDEN;
+        ApiException apiException = getApiException(e, httpStatus);
+        return new ResponseEntity<>(apiException, httpStatus);
+    }*/
+
     @ExceptionHandler(value = {ResourceNotFoundException.class})
     public ResponseEntity<?> resourceNotFoundExceptionHandler(ResourceNotFoundException e) {
         HttpStatus httpStatus = HttpStatus.NOT_FOUND;
@@ -34,8 +41,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(apiException, httpStatus);
     }
 
-    @ExceptionHandler(value = {AccessException.class})
-    public ResponseEntity<?> accessExceptionHandler(AccessException e) {
+    @ExceptionHandler(value = {AccessException.class, IllegalArgumentException.class})
+    public <T extends Exception> ResponseEntity<?> accessExceptionHandler(T e) {
         HttpStatus httpStatus = HttpStatus.FORBIDDEN;
         ApiException apiException = getApiException(e, httpStatus);
         return new ResponseEntity<>(apiException, httpStatus);
