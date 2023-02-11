@@ -1,4 +1,4 @@
-package ua.shamray.myblogspringbootv1.service.impl;
+package ua.shamray.myblogspringbootv1.service.impl.unit;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +15,7 @@ import ua.shamray.myblogspringbootv1.model.Post;
 import ua.shamray.myblogspringbootv1.repository.PostRepository;
 import ua.shamray.myblogspringbootv1.service.AccountService;
 import ua.shamray.myblogspringbootv1.service.PostService;
+import ua.shamray.myblogspringbootv1.service.impl.PostServiceImpl;
 
 import java.util.Arrays;
 import java.util.List;
