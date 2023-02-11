@@ -1,8 +1,7 @@
-package ua.shamray.myblogspringbootv1.service.impl;
+package ua.shamray.myblogspringbootv1.service.impl.unit;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
@@ -13,14 +12,13 @@ import ua.shamray.myblogspringbootv1.model.Account;
 import ua.shamray.myblogspringbootv1.repository.AccountRepository;
 import ua.shamray.myblogspringbootv1.service.AccountService;
 import ua.shamray.myblogspringbootv1.service.RoleService;
+import ua.shamray.myblogspringbootv1.service.impl.AccountServiceImpl;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
-//@ExtendWith(SpringExtension.class)
 @SpringBootTest(properties = "command.line.runner.enabled=false")
-class AccountServiceImplTest {
+class AccountServiceImplUnitTest {
     @MockBean
     private AccountRepository accountRepository;
     @MockBean
@@ -58,7 +56,6 @@ class AccountServiceImplTest {
         assertThat(account.getPassword()).isEqualTo("password");
         assertThat(account.getEmail()).isEqualTo("findMe@mail.com");
     }
-
     @Test
     void canConvertAccountEntityToDTO() {
         //given
@@ -78,7 +75,6 @@ class AccountServiceImplTest {
         assertThat(accountDTO.getPassword()).isNull();
         assertThat(accountDTO.getEmail()).isEqualTo("findMe@mail.com");
     }
-
     @Test
     void canGetAllPosts() {
         //when
@@ -128,20 +124,23 @@ class AccountServiceImplTest {
     }
 
     @Test
-    void setUserAsAdmin() {
+    void checkFindByEmailRepoCalledInAccountExistsChecker() {
+        //given
+        String email = "findMe@mail.com";
+        //when
+        accountService.accountExists(email);
+        //then
+        verify(accountRepository).findByEmail(email);
     }
 
     @Test
-    void accountExists() {
-    }
-
-    @Test
-    void findByEmail() {
-    }
-
-    @Test
-    void getCurrentAuthenticatedAccount() {
-    }
+    void checkFindByEmailRepoCalledInFindByEmailService() {
+        //given
+        String email = "findMe@mail.com";
+        //when
+        accountService.findByEmail(email);
+        //then
+        verify(accountRepository).findByEmail(email);    }
 
 
 }

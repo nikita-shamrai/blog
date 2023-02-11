@@ -42,10 +42,6 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
             Set<Role> userRoles = new HashSet<>();
             roleRepository.findById("ROLE_USER").ifPresent(userRoles::add);
 
-            Set<Role> adminRoles = new HashSet<>();
-            roleRepository.findById("ROLE_USER").ifPresent(adminRoles::add);
-            roleRepository.findById("ROLE_ADMIN").ifPresent(adminRoles::add);
-
             Account userAccount1 = Account.builder()
                     .firstName("user1")
                     .lastName("user1")
@@ -71,7 +67,7 @@ public class CommandLineAppStartupRunner implements CommandLineRunner {
                     .lastName("admin1")
                     .email("admin1@mail.com")
                     .password("password")
-                    .roles(adminRoles)
+                    .roles(userRoles)
                     .postList(new ArrayList<>())
                     .build();
             accountService.saveNewUser(adminAccount);

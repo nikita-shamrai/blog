@@ -2,6 +2,8 @@ package ua.shamray.myblogspringbootv1.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -29,6 +31,7 @@ public class Account {
     private String password;
 
     @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     private List<Post> postList = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)

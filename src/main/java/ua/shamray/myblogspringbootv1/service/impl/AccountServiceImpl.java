@@ -50,17 +50,11 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public void setUserAsAdmin(Account account) {
-        accountRepository
-                .findById(account.getId())
-                .ifPresentOrElse(
-                        account1 -> {
-                            roleService.setRoleAsAdmin(account1);
-                            accountRepository.save(account1);
-                        },
-                        () -> {
-                            throw new IllegalArgumentException("User not found.");
-                        }
-                );
+        if (accountRepository.findById(account.getId()).isEmpty()){
+            throw new IllegalArgumentException("User not found.");
+        }
+        roleService.setRoleAsAdmin(account);
+        accountRepository.save(account);
     }
 
     @Override
