@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.expression.AccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ua.shamray.myblogspringbootv1.dto.PostDTO;
 import ua.shamray.myblogspringbootv1.exception.ResourceNotFoundException;
@@ -37,7 +36,6 @@ public class PostController {
 
     //is it Ok to map entity to dto here? If no - where?
     @GetMapping("/my")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<PostDTO>> getAllUserPosts(){
         List<PostDTO> userPosts = accountService
                 .getCurrentAuthenticatedAccount()
@@ -49,7 +47,6 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.CREATED)
     public PostDTO createPost(@Valid @RequestBody PostDTO postDTO) {
         return postService.saveNewPost(postDTO);
@@ -57,7 +54,6 @@ public class PostController {
 
     //is it Ok or can I optimize this?
     @PutMapping("/edit/{id}")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<PostDTO> editPost(@PathVariable Long id,
                                             @Valid @RequestBody PostDTO postDTO,
                                             HttpServletRequest request) throws AccessException {
@@ -75,7 +71,6 @@ public class PostController {
 
     //is it Ok or can I optimize this?
     @DeleteMapping("delete/{id}")
-    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<List<PostDTO>> deletePostById(@PathVariable Long id,
                                                         HttpServletRequest request) throws AccessException {
         if(postService.getById(id).isEmpty()){
