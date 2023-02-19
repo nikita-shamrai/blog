@@ -1,7 +1,6 @@
 package ua.shamray.myblogspringbootv1.config;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import ua.shamray.myblogspringbootv1.model.Account;
@@ -14,6 +13,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+
+@Deprecated
 @ConditionalOnProperty(
         prefix = "command.line.runner",
         value = "enabled",
@@ -21,13 +22,13 @@ import java.util.Set;
         matchIfMissing = true)
 @Component
 @RequiredArgsConstructor
-public class CommandLineAppStartupRunner implements CommandLineRunner {
+public class CommandLineAppStartupRunner /*implements CommandLineRunner */{
 
     private final PostService postService;
     private final AccountService accountService;
     private final RoleRepository roleRepository;
 
-    @Override
+    /*@Override*/
     public void run(String... args) {
         if(accountService.getAll().isEmpty()){
 
