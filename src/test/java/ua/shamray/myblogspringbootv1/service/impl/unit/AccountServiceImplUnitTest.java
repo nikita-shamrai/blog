@@ -48,7 +48,7 @@ class AccountServiceImplUnitTest {
                 .email("findMe@mail.com")
                 .build();
         //when
-        Account account = accountService.dtoToEntity(accountDTO);
+        Account account = accountMapper.dtoToEntity(accountDTO);
         //then
         assertThat(account.getId()).isNull();
         assertThat(account.getFirstName()).isEqualTo("firstName");
@@ -67,7 +67,7 @@ class AccountServiceImplUnitTest {
                 .email("findMe@mail.com")
                 .build();
         //when
-        AccountDTO accountDTO = accountService.entityToDTO(account);
+        AccountDTO accountDTO = accountMapper.entityToDTO(account);
         //then
         assertThat(accountDTO.getId()).isEqualTo(1L);
         assertThat(accountDTO.getFirstName()).isEqualTo("firstName");
@@ -81,23 +81,6 @@ class AccountServiceImplUnitTest {
         accountService.getAll();
         //then
         verify(accountRepository).findAll();
-    }
-
-    @Test
-    void canSaveNewUserIfEntityProvided() {
-        //given
-        Account account = Account.builder()
-                .firstName("firstName")
-                .lastName("lastName")
-                .password("password")
-                .email("findMe@mail.com")
-                .build();
-        //when
-        accountService.saveNewUser(account);
-        //then
-        verify(roleService).setRoleAsUser(account);
-        verify(accountRepository).save(account);
-        assertThat(account.getPassword()).isNotEqualTo("password");
     }
 
 //is it Ok?

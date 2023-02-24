@@ -29,23 +29,18 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account saveNewUser(Account account) {
+    public AccountDTO saveNewUser(AccountDTO accountDTO) throws IllegalArgumentException {
+        if (accountExists(accountDTO.getEmail())) {
+            throw new IllegalArgumentException("Account with email " + accountDTO.getEmail() + " already exists.");
+        }
+        Account account = accountMapper.dtoToEntity(accountDTO);
         String encodedPass = passwordEncoder.encode(account.getPassword());
         account.setPassword(encodedPass);
         if(Objects.isNull(account.getRoles())) {
             roleService.setRoleAsUser(account);
         }
-        return accountRepository.save(account);
-    }
-
-    @Override
-    public AccountDTO saveNewUser(AccountDTO accountDTO) throws IllegalArgumentException {
-        if (accountExists(accountDTO.getEmail())) {
-            throw new IllegalArgumentException("Account with email " + accountDTO.getEmail() + " already exists.");
-        }
-        Account account = dtoToEntity(accountDTO);
-        Account savedAccount = saveNewUser(account);
-        return entityToDTO(savedAccount);
+        Account savedAccount = accountRepository.save(account);
+        return accountMapper.entityToDTO(savedAccount);
     }
 
     @Override
@@ -74,13 +69,5 @@ public class AccountServiceImpl implements AccountService {
                 "SecurityContextHolder getName error. Check user authentication."));
     }
 
-    @Override
-    public Account dtoToEntity(AccountDTO accountDTO) {
-        return accountMapper.dtoToEntity(accountDTO);
-    }
-    @Override
-    public AccountDTO entityToDTO(Account account) {
-        return accountMapper.entityToDTO(account);
-    }
 
 }
