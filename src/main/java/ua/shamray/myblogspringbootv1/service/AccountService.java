@@ -10,7 +10,6 @@ public interface AccountService {
     List<Account> getAll();
     AccountDTO saveNewUser(AccountDTO accountDTO);
     void setUserAsAdmin(Account account);
-    Boolean accountExists(String email);
     Optional<Account> findByEmail(String email);
     Account getCurrentAuthenticatedAccount();
 

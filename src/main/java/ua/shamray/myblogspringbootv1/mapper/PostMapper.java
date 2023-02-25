@@ -9,7 +9,6 @@ import ua.shamray.myblogspringbootv1.dto.PostDTO;
 import ua.shamray.myblogspringbootv1.model.Post;
 import ua.shamray.myblogspringbootv1.service.AccountService;
 
-
 @Mapper(componentModel = "spring",
         injectionStrategy = InjectionStrategy.CONSTRUCTOR,
         uses = {AccountMapper.class})

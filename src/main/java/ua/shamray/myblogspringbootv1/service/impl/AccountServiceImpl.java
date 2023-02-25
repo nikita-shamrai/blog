@@ -1,5 +1,7 @@
 package ua.shamray.myblogspringbootv1.service.impl;
 
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,32 +31,26 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public AccountDTO saveNewUser(AccountDTO accountDTO) throws IllegalArgumentException {
-        if (accountExists(accountDTO.getEmail())) {
-            throw new IllegalArgumentException("Account with email " + accountDTO.getEmail() + " already exists.");
-        }
+    public AccountDTO saveNewUser(AccountDTO accountDTO) {
+        accountRepository
+                .findByEmail(accountDTO.getEmail())
+                .orElseThrow(() -> new EntityExistsException(
+                        String.format("Account with email %s already exists.", accountDTO.getEmail())));
         Account account = accountMapper.dtoToEntity(accountDTO);
         String encodedPass = passwordEncoder.encode(account.getPassword());
         account.setPassword(encodedPass);
-        if(Objects.isNull(account.getRoles())) {
-            roleService.setRoleAsUser(account);
-        }
+        roleService.setRoleAsUser(account);
         Account savedAccount = accountRepository.save(account);
         return accountMapper.entityToDTO(savedAccount);
     }
 
     @Override
     public void setUserAsAdmin(Account account) {
-        if (accountRepository.findById(account.getId()).isEmpty()){
-            throw new IllegalArgumentException("User not found.");
-        }
+        accountRepository
+                .findById(account.getId())
+                .orElseThrow(() -> new EntityNotFoundException("User not found."));
         roleService.setRoleAsAdmin(account);
         accountRepository.save(account);
-    }
-
-    @Override
-    public Boolean accountExists(String email) {
-        return accountRepository.findByEmail(email).isPresent();
     }
 
     @Override

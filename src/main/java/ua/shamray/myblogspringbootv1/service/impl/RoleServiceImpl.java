@@ -1,5 +1,7 @@
 package ua.shamray.myblogspringbootv1.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ua.shamray.myblogspringbootv1.exception.ApiException;
@@ -19,21 +21,19 @@ public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
 
     @Override
+    @Transactional
     public Account setRoleAsUser(Account account) {
         Optional<Role> roleUserOptional = roleRepository.findById("ROLE_USER");
-        Role roleUser = roleUserOptional.orElseThrow(() -> new NoSuchElementException("Role User not found"));
-        account.setRoles(new HashSet<>());
+        Role roleUser = roleUserOptional.orElseThrow(() -> new EntityNotFoundException("Role User not found"));
         account.getRoles().add(roleUser);
         return account;
     }
 
     @Override
+    @Transactional
     public Account setRoleAsAdmin(Account account) {
         Optional<Role> roleAdminOptional = roleRepository.findById("ROLE_ADMIN");
-        Role roleAdmin = roleAdminOptional.orElseThrow(() -> new NoSuchElementException("Role Admin not found"));
-        if (Objects.isNull(account.getRoles())){
-            throw new IllegalArgumentException("Account provided is not an existing user");
-        }
+        Role roleAdmin = roleAdminOptional.orElseThrow(() -> new EntityNotFoundException("Role Admin not found"));
         account.getRoles().add(roleAdmin);
         return account;
     }

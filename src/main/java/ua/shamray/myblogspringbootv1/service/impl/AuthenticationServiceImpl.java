@@ -1,8 +1,10 @@
 package ua.shamray.myblogspringbootv1.service.impl;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
-import ua.shamray.myblogspringbootv1.exception.ResourceNotFoundException;
+import ua.shamray.myblogspringbootv1.model.Account;
 import ua.shamray.myblogspringbootv1.model.Post;
 import ua.shamray.myblogspringbootv1.service.AccountService;
 import ua.shamray.myblogspringbootv1.service.AuthenticationService;
@@ -18,8 +20,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Override
     public boolean isAuthenticatedUserAuthorOfPost(Long postId) {
         String usernameAuthenticated = accountService.getCurrentAuthenticatedAccount().getEmail();
-        Post post = postService.getById(postId).orElseThrow(() -> new ResourceNotFoundException("Post with postId=" + postId + " doesn't exist"));
-        return post.getAccount().getEmail().equals(usernameAuthenticated);
+        Post post = postService.getById(postId);
+        if (!post.getAccount().getEmail().equals(usernameAuthenticated)) {
+            throw new AccessDeniedException(String.format("You are not author of post id=%s", postId));
+        }
+        return true;
+    }
+
+    @Override
+    public Account getAuthenticatedUserByEmail(String email) {
+        return accountService
+                .findByEmail(email)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        String.format("Account with email: %s doesn't exist", email)));
     }
 
 }

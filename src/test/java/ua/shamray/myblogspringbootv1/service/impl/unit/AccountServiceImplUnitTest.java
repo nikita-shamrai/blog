@@ -106,15 +106,6 @@ class AccountServiceImplUnitTest {
         assertThat(newUserDTO.getId()).isEqualTo(1L);
     }
 
-    @Test
-    void checkFindByEmailRepoCalledInAccountExistsChecker() {
-        //given
-        String email = "findMe@mail.com";
-        //when
-        accountService.accountExists(email);
-        //then
-        verify(accountRepository).findByEmail(email);
-    }
 
     @Test
     void checkFindByEmailRepoCalledInFindByEmailService() {

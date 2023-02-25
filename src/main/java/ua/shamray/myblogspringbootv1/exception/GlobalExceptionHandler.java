@@ -1,5 +1,7 @@
 package ua.shamray.myblogspringbootv1.exception;
 
+import jakarta.persistence.EntityExistsException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.expression.AccessException;
@@ -7,6 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -27,23 +30,22 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(apiException, httpStatus);
     }
 
-  /*  @ExceptionHandler(value = {IllegalArgumentException.class})
-    public ResponseEntity<?> illegalArgumentExceptionHandler(IllegalArgumentException e){
-        HttpStatus httpStatus = HttpStatus.FORBIDDEN;
-        ApiException apiException = getApiException(e, httpStatus);
-        return new ResponseEntity<>(apiException, httpStatus);
-    }*/
-
-    @ExceptionHandler(value = {ResourceNotFoundException.class})
-    public ResponseEntity<?> resourceNotFoundExceptionHandler(ResourceNotFoundException e) {
+    @ExceptionHandler(value = {EntityNotFoundException.class})
+    public ResponseEntity<?> resourceNotFoundExceptionHandler(EntityNotFoundException e) {
         HttpStatus httpStatus = HttpStatus.NOT_FOUND;
         ApiException apiException = getApiException(e, httpStatus);
         return new ResponseEntity<>(apiException, httpStatus);
     }
 
-    @ExceptionHandler(value = {AccessException.class, IllegalArgumentException.class})
+    @ExceptionHandler(value = {AccessException.class, AccessDeniedException.class})
     public <T extends Exception> ResponseEntity<?> accessExceptionHandler(T e) {
         HttpStatus httpStatus = HttpStatus.FORBIDDEN;
+        ApiException apiException = getApiException(e, httpStatus);
+        return new ResponseEntity<>(apiException, httpStatus);
+    }
+    @ExceptionHandler(value = {EntityExistsException.class})
+    public <T extends Exception> ResponseEntity<?> entityExistsExceptionHandler(T e) {
+        HttpStatus httpStatus = HttpStatus.CONFLICT;
         ApiException apiException = getApiException(e, httpStatus);
         return new ResponseEntity<>(apiException, httpStatus);
     }

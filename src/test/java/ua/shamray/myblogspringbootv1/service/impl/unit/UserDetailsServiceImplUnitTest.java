@@ -11,8 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import ua.shamray.myblogspringbootv1.model.Account;
 import ua.shamray.myblogspringbootv1.model.Role;
 import ua.shamray.myblogspringbootv1.service.AccountService;
-import ua.shamray.myblogspringbootv1.service.MyUserDetailsService;
-import ua.shamray.myblogspringbootv1.service.impl.MyUserDetailsServiceImpl;
+import ua.shamray.myblogspringbootv1.service.impl.UserDetailsServiceImpl;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest(properties = "command.line.runner.enabled=false")
-class MyUserDetailsServiceImplUnitTest {
+class UserDetailsServiceImplUnitTest {
 
     @MockBean
     private AccountService accountService;
@@ -30,7 +29,7 @@ class MyUserDetailsServiceImplUnitTest {
 
     @BeforeEach
     void setUp() {
-        myUserDetailsService = new MyUserDetailsServiceImpl(accountService);
+        myUserDetailsService = new UserDetailsServiceImpl(accountService);
     }
 
     //Do I need to test Throws in Optional?
