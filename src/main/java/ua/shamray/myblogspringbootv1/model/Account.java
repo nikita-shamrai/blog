@@ -38,6 +38,7 @@ public class Account {
     @JoinTable(name = "account_role",
             joinColumns = {@JoinColumn(name = "account_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_name", referencedColumnName = "name")})
+    @Cascade(org.hibernate.annotations.CascadeType.DETACH)
     private Set<Role> roles = new HashSet<>();
 
 }

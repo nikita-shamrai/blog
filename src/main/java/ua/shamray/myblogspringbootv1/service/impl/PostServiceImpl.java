@@ -46,7 +46,6 @@ public class PostServiceImpl implements PostService {
                 .collect(Collectors.toList());
     }
 
-
     @Override
     public PostDTO getDTOById(Long id) {
         Optional<Post> post = postRepository.findById(id);
@@ -68,6 +67,7 @@ public class PostServiceImpl implements PostService {
         post.setAccount(account);
         return postMapper.entityToDTO(postRepository.save(post));
     }
+
     @Override
     public Post save(Post post) {
         return postRepository.save(post);

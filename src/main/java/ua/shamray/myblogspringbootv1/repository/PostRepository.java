@@ -11,7 +11,6 @@ import java.util.List;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
-   // List<Post> findPostsByAccount(Account account);
     @Query("select p from Post p where p.account.id = :id")
     List<Post> findPostsByAccountID(@Param("id") Long id);
 }

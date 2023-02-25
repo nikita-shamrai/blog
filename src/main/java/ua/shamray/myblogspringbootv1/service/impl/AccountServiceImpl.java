@@ -34,8 +34,10 @@ public class AccountServiceImpl implements AccountService {
     public AccountDTO saveNewUser(AccountDTO accountDTO) {
         accountRepository
                 .findByEmail(accountDTO.getEmail())
-                .orElseThrow(() -> new EntityExistsException(
-                        String.format("Account with email %s already exists.", accountDTO.getEmail())));
+                .ifPresent(account -> {
+                    throw new EntityExistsException(
+                            String.format("Account with email %s already exists.", accountDTO.getEmail()));
+                });
         Account account = accountMapper.dtoToEntity(accountDTO);
         String encodedPass = passwordEncoder.encode(account.getPassword());
         account.setPassword(encodedPass);

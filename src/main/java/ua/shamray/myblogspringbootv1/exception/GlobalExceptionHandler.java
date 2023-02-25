@@ -24,14 +24,14 @@ import java.util.stream.Collectors;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = {ApiRequestException.class})
-    public ResponseEntity<?> apiExceptionHandler(ApiRequestException e){
+    public <T extends Exception> ResponseEntity<?> apiExceptionHandler(T e){
         HttpStatus httpStatus = HttpStatus.BAD_REQUEST;
         ApiException apiException = getApiException(e, httpStatus);
         return new ResponseEntity<>(apiException, httpStatus);
     }
 
     @ExceptionHandler(value = {EntityNotFoundException.class})
-    public ResponseEntity<?> resourceNotFoundExceptionHandler(EntityNotFoundException e) {
+    public <T extends Exception> ResponseEntity<?> resourceNotFoundExceptionHandler(T e) {
         HttpStatus httpStatus = HttpStatus.NOT_FOUND;
         ApiException apiException = getApiException(e, httpStatus);
         return new ResponseEntity<>(apiException, httpStatus);
@@ -50,7 +50,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(apiException, httpStatus);
     }
 
-    @ExceptionHandler(value = {MethodArgumentNotValidException.class})
+   //This handler is to extract only "default message" from full error message in validation
+   @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     public ResponseEntity<?> handleMethodArgumentNotValid(MethodArgumentNotValidException e){
         HttpStatus httpStatus = HttpStatus.NOT_ACCEPTABLE;
         List<String> errors = e

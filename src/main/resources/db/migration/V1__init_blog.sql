@@ -33,8 +33,10 @@ create table role
     primary key (name)
 );
 alter table account_role
-    add constraint FK9globugmh3xbh34nitt3fggob foreign key (role_name) references role (name);
+    add constraint `role_name_fk_1` foreign key (role_name) references role (name);
 alter table account_role
-    add constraint FK1f8y4iy71kb1arff79s71j0dh foreign key (account_id) references account (id);
+    add constraint `account_id_fk_1` foreign key (account_id) references account (id)
+        ON DELETE CASCADE;
 alter table post
-    add constraint fk_account foreign key (account_id) references account (id);
+    add constraint `fk_account` foreign key (account_id) references account (id)
+        ON DELETE CASCADE;
