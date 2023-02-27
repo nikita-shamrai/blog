@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import ua.shamray.myblogspringbootv1.dto.AccountDTO;
 import ua.shamray.myblogspringbootv1.dto.AccountViewer;
-import ua.shamray.myblogspringbootv1.model.Account;
+import ua.shamray.myblogspringbootv1.entity.Account;
 import java.util.ArrayList;
 import java.util.HashSet;
 

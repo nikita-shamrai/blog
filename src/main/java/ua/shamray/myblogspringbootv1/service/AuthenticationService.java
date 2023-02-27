@@ -1,6 +1,6 @@
 package ua.shamray.myblogspringbootv1.service;
 
-import ua.shamray.myblogspringbootv1.model.Account;
+import ua.shamray.myblogspringbootv1.entity.Account;
 
 public interface AuthenticationService {
 

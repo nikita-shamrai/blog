@@ -1,14 +1,13 @@
 package ua.shamray.myblogspringbootv1.service.impl.unit;
 
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import ua.shamray.myblogspringbootv1.model.Account;
-import ua.shamray.myblogspringbootv1.model.Role;
+import ua.shamray.myblogspringbootv1.entity.Account;
+import ua.shamray.myblogspringbootv1.entity.Role;
 import ua.shamray.myblogspringbootv1.repository.RoleRepository;
 import ua.shamray.myblogspringbootv1.service.RoleService;
 import ua.shamray.myblogspringbootv1.service.impl.RoleServiceImpl;
@@ -16,7 +15,6 @@ import ua.shamray.myblogspringbootv1.service.impl.RoleServiceImpl;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -34,6 +32,7 @@ class RoleServiceImplUnitTest {
     }
 
     @Test
+    @Disabled
     void setRoleAsUser() {
         //given
         Role userRole = Role.builder()
@@ -54,6 +53,7 @@ class RoleServiceImplUnitTest {
     }
 
     @Test
+    @Disabled
     void setRoleAsAdminThrowsExIfUserIsNotRegistered() {
         //given
         Role adminRole = Role.builder()

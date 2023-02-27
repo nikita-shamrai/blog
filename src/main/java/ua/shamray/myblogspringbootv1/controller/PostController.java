@@ -8,7 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import ua.shamray.myblogspringbootv1.dto.PostDTO;
-import ua.shamray.myblogspringbootv1.model.Account;
+import ua.shamray.myblogspringbootv1.entity.Account;
 import ua.shamray.myblogspringbootv1.security.MyUser;
 import ua.shamray.myblogspringbootv1.service.AuthenticationService;
 import ua.shamray.myblogspringbootv1.service.PostService;

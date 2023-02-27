@@ -1,4 +1,4 @@
-package ua.shamray.myblogspringbootv1.model;
+package ua.shamray.myblogspringbootv1.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

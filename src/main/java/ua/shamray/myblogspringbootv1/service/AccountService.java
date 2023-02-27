@@ -1,7 +1,7 @@
 package ua.shamray.myblogspringbootv1.service;
 
 import ua.shamray.myblogspringbootv1.dto.AccountDTO;
-import ua.shamray.myblogspringbootv1.model.Account;
+import ua.shamray.myblogspringbootv1.entity.Account;
 import java.util.List;
 import java.util.Optional;
 

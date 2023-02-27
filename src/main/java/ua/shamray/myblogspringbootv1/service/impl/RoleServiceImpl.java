@@ -4,15 +4,11 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ua.shamray.myblogspringbootv1.exception.ApiException;
-import ua.shamray.myblogspringbootv1.model.Account;
-import ua.shamray.myblogspringbootv1.model.Role;
+import ua.shamray.myblogspringbootv1.entity.Account;
+import ua.shamray.myblogspringbootv1.entity.Role;
 import ua.shamray.myblogspringbootv1.repository.RoleRepository;
 import ua.shamray.myblogspringbootv1.service.RoleService;
 
-import java.util.HashSet;
-import java.util.NoSuchElementException;
-import java.util.Objects;
 import java.util.Optional;
 
 @Service

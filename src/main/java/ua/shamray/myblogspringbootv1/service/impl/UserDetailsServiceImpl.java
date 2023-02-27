@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
-import ua.shamray.myblogspringbootv1.model.Account;
+import ua.shamray.myblogspringbootv1.entity.Account;
 import ua.shamray.myblogspringbootv1.security.MyUser;
 import ua.shamray.myblogspringbootv1.service.AccountService;
 

@@ -8,7 +8,7 @@ import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import ua.shamray.myblogspringbootv1.dto.AccountDTO;
 import ua.shamray.myblogspringbootv1.mapper.AccountMapper;
-import ua.shamray.myblogspringbootv1.model.Account;
+import ua.shamray.myblogspringbootv1.entity.Account;
 import ua.shamray.myblogspringbootv1.repository.AccountRepository;
 import ua.shamray.myblogspringbootv1.service.AccountService;
 import ua.shamray.myblogspringbootv1.service.RoleService;

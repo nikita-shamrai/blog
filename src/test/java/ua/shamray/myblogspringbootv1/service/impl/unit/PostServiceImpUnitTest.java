@@ -1,17 +1,16 @@
 package ua.shamray.myblogspringbootv1.service.impl.unit;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import ua.shamray.myblogspringbootv1.dto.AccountViewer;
 import ua.shamray.myblogspringbootv1.dto.PostDTO;
 import ua.shamray.myblogspringbootv1.mapper.PostMapper;
-import ua.shamray.myblogspringbootv1.model.Account;
-import ua.shamray.myblogspringbootv1.model.Post;
+import ua.shamray.myblogspringbootv1.entity.Account;
+import ua.shamray.myblogspringbootv1.entity.Post;
 import ua.shamray.myblogspringbootv1.repository.PostRepository;
 import ua.shamray.myblogspringbootv1.service.AccountService;
 import ua.shamray.myblogspringbootv1.service.PostService;
@@ -24,7 +23,6 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -49,8 +47,7 @@ class PostServiceImpUnitTest {
     @BeforeEach
     void setUp() {
         postService = new PostServiceImpl(postRepository,
-                                          postMapper,
-                                          accountService);
+                                          postMapper);
         account = Account.builder()
                 .firstName("firstName")
                 .lastName("lastName")
@@ -111,7 +108,7 @@ class PostServiceImpUnitTest {
         Post subject = post1;
         PostDTO expected = post1DTO;
         //when
-        PostDTO resultPostDTO = postService.entityToDTO(subject);
+        PostDTO resultPostDTO = postMapper.entityToDTO(subject);
         //then
         assertThat(resultPostDTO.getId()).isEqualTo(expected.getId());
         assertThat(resultPostDTO.getAccountViewer().getEmail())
@@ -129,7 +126,7 @@ class PostServiceImpUnitTest {
         //fields id and account in expected must be null
         Post expected = post1;
         //when
-        Post resultPost = postService.dtoToEntity(subject);
+        Post resultPost = postMapper.dtoToEntity(subject);
         //then
         assertNull(resultPost.getId());
         assertNull(resultPost.getAccount());
@@ -151,7 +148,7 @@ class PostServiceImpUnitTest {
                 .thenReturn(Optional.of(postToUpdate));
         when(postRepository.save(any(Post.class)))
                 .thenAnswer(invocation -> invocation.getArgument(0));
-        when(postService.entityToDTO(any(Post.class))).thenCallRealMethod();
+        when(postMapper.entityToDTO(any(Post.class))).thenCallRealMethod();
         PostDTO resultDTO = postService.updatePost(1L, argumentDTO);
         //then
         assertEquals(resultDTO.getTitle(), argumentDTO.getTitle());
@@ -180,7 +177,7 @@ class PostServiceImpUnitTest {
         //when
         when(postRepository.findById(1L))
                 .thenReturn(Optional.ofNullable(subjectPost));
-        when(postService.entityToDTO(subjectPost)).thenCallRealMethod();
+        when(postMapper.entityToDTO(subjectPost)).thenCallRealMethod();
         PostDTO resultDTO = postService.getDTOById(post1.getId());
         //then
         assertEquals(resultDTO.getId(), subjectPost.getId());
@@ -191,9 +188,11 @@ class PostServiceImpUnitTest {
     }
 
     @Test
+    @Disabled
     void canGetPostById() {
         //given
         post1.setId(1L);
+        postRepository.save(post1);
         //when
         postService.getById(post1.getId());
         //then

@@ -6,17 +6,14 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 import ua.shamray.myblogspringbootv1.dto.PostDTO;
-import ua.shamray.myblogspringbootv1.model.Post;
-import ua.shamray.myblogspringbootv1.service.AccountService;
+import ua.shamray.myblogspringbootv1.entity.Post;
 
-@Mapper(componentModel = "spring",
-        injectionStrategy = InjectionStrategy.CONSTRUCTOR,
-        uses = {AccountMapper.class})
+@Mapper(componentModel = "spring", uses = AccountMapper.class,
+        injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public abstract class PostMapper {
+
     @Autowired
     protected AccountMapper accountMapper;
-    @Autowired
-    protected AccountService accountService;
 
     @Mapping(target = "accountViewer", expression = "java(accountMapper.entityToViewer(post.getAccount()))")
     public abstract PostDTO entityToDTO(Post post);
