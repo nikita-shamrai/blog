@@ -30,7 +30,7 @@ create table post
 create table role
 (
     id   bigint not null auto_increment,
-    name varchar(16) not null,
+    role_type varchar(16) not null,
     primary key (id)
 );
 alter table account_role

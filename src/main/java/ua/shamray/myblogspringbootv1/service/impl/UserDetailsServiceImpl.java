@@ -30,9 +30,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<GrantedAuthority> grantedAuthorities = account
                 .getRoles()
                 .stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
+                .map(role -> new SimpleGrantedAuthority(role.getRoleType().name()))
                 .collect(Collectors.toList());
-        return new MyUser(account.getEmail(), account.getPassword(), grantedAuthorities, account.getId());
+        return MyUser.myBuilder()
+                .username(account.getEmail())
+                .password(account.getPassword())
+                .authorities(grantedAuthorities)
+                .userID(account.getId())
+                .build();
     }
 
 }

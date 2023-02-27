@@ -20,7 +20,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional
     public Account setRoleAsUser(Account account) {
-        Optional<Role> roleUserOptional = roleRepository.findByName(RoleType.ROLE_USER);
+        Optional<Role> roleUserOptional = roleRepository.findByRoleType(RoleType.ROLE_USER);
         Role roleUser = roleUserOptional.orElseThrow(() -> new EntityNotFoundException("Role User not found"));
         account.getRoles().add(roleUser);
         return account;
@@ -29,7 +29,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional
     public Account setRoleAsAdmin(Account account) {
-        Optional<Role> roleAdminOptional = roleRepository.findByName(RoleType.ROLE_ADMIN);
+        Optional<Role> roleAdminOptional = roleRepository.findByRoleType(RoleType.ROLE_ADMIN);
         Role roleAdmin = roleAdminOptional.orElseThrow(() -> new EntityNotFoundException("Role Admin not found"));
         account.getRoles().add(roleAdmin);
         return account;

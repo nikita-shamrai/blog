@@ -45,7 +45,7 @@ class UserDetailsServiceImplUnitTest {
                 .lastName("lastName")
                 .password("password")
                 .email("findMe@mail.com")
-                .roles(Set.of(Role.builder().name(RoleType.ROLE_USER).build()))
+                .roles(Set.of(Role.builder().roleType(RoleType.ROLE_USER).build()))
                 .build();
         UserDetails userDetails = User.builder()
                 .username(account.getEmail())

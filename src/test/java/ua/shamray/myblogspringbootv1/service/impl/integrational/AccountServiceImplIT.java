@@ -8,6 +8,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import ua.shamray.myblogspringbootv1.dto.AccountDTO;
 import ua.shamray.myblogspringbootv1.entity.Account;
 import ua.shamray.myblogspringbootv1.entity.Role;
+import ua.shamray.myblogspringbootv1.entity.RoleType;
 import ua.shamray.myblogspringbootv1.repository.AccountRepository;
 import ua.shamray.myblogspringbootv1.repository.RoleRepository;
 import ua.shamray.myblogspringbootv1.service.AccountService;
@@ -72,7 +73,7 @@ class AccountServiceImplIT {
         //then
         AtomicBoolean contains = new AtomicBoolean(false);
         account.getRoles().forEach(role -> {
-                if(role.getName().equals("ROLE_ADMIN")){
+                if(role.getRoleType().equals(RoleType.ROLE_ADMIN)){
                     contains.set(true);
         }});
         assertThat(contains).isTrue();

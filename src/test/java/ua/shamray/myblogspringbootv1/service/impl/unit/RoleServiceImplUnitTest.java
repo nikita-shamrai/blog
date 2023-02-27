@@ -37,7 +37,7 @@ class RoleServiceImplUnitTest {
     void setRoleAsUser() {
         //given
         Role userRole = Role.builder()
-                .name(RoleType.ROLE_USER)
+                .roleType(RoleType.ROLE_USER)
                 .build();
 
         Account account = Account.builder()
@@ -58,7 +58,7 @@ class RoleServiceImplUnitTest {
     void setRoleAsAdminThrowsExIfUserIsNotRegistered() {
         //given
         Role adminRole = Role.builder()
-                .name(RoleType.ROLE_ADMIN)
+                .roleType(RoleType.ROLE_ADMIN)
                 .build();
 
         Account account = Account.builder()
@@ -78,10 +78,10 @@ class RoleServiceImplUnitTest {
     void canSetRoleAsAdmin() {
         //given
         Role userRole = Role.builder()
-                .name(RoleType.ROLE_USER)
+                .roleType(RoleType.ROLE_USER)
                 .build();
         Role adminRole = Role.builder()
-                .name(RoleType.ROLE_ADMIN)
+                .roleType(RoleType.ROLE_ADMIN)
                 .build();
 
         Account account = Account.builder()

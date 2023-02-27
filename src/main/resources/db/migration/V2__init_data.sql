@@ -1,6 +1,6 @@
-insert into role (name)
+insert into role (role_type)
 values ('ROLE_USER');
-insert into role (name)
+insert into role (role_type)
 values ('ROLE_ADMIN');
 
 insert into account (email, first_name, last_name, password)
