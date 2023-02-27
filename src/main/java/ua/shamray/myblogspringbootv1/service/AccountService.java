@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AccountService {
-
-    List<Account> getAll();
     AccountDTO saveNewUser(AccountDTO accountDTO);
     void setUserAsAdmin(Account account);
     Optional<Account> findByEmail(String email);

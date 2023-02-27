@@ -68,9 +68,4 @@ public class PostServiceImpl implements PostService {
         return postMapper.entityToDTO(postRepository.save(post));
     }
 
-    @Override
-    public Post save(Post post) {
-        return postRepository.save(post);
-    }
-
 }

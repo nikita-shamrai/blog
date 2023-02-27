@@ -13,7 +13,6 @@ import ua.shamray.myblogspringbootv1.service.PostService;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
-
     private final AccountService accountService;
     private final PostService postService;
 

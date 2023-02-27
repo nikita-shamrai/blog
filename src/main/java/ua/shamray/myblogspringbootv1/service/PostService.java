@@ -6,10 +6,8 @@ import ua.shamray.myblogspringbootv1.entity.Post;
 import java.util.List;
 
 public interface PostService {
-
     List<PostDTO> getAll();
     PostDTO saveNewPost(PostDTO postDTO, Account account);
-    Post save(Post post);
     PostDTO getDTOById(Long id);
     Post getById(Long id);
     PostDTO updatePost(Long id, PostDTO postDTO);

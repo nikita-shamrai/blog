@@ -7,16 +7,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ua.shamray.myblogspringbootv1.dto.AccountDTO;
-import ua.shamray.myblogspringbootv1.entity.Role;
 import ua.shamray.myblogspringbootv1.mapper.AccountMapper;
 import ua.shamray.myblogspringbootv1.entity.Account;
 import ua.shamray.myblogspringbootv1.repository.AccountRepository;
 import ua.shamray.myblogspringbootv1.service.AccountService;
 import ua.shamray.myblogspringbootv1.service.RoleService;
-
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -25,11 +22,6 @@ public class AccountServiceImpl implements AccountService {
     private final RoleService roleService;
     private final PasswordEncoder passwordEncoder;
     private final AccountMapper accountMapper;
-
-    @Override
-    public List<Account> getAll() {
-        return accountRepository.findAll();
-    }
 
     @Override
     public AccountDTO saveNewUser(AccountDTO accountDTO) {

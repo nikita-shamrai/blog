@@ -204,11 +204,4 @@ class PostServiceImpUnitTest {
 
     }
 
-    @Test
-    void canSavePostIfEntityProvided() {
-        //when
-        postService.save(post1);
-        //then
-        verify(postRepository).save(post1);
-    }
 }

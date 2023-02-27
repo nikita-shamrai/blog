@@ -3,7 +3,6 @@ package ua.shamray.myblogspringbootv1.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.Cascade;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

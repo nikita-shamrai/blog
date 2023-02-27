@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.User;
 import java.util.Collection;
 @Getter
 public class MyUser extends User {
-
     private final long userID;
     @Builder(builderMethodName = "myBuilder")
     public MyUser(String username,

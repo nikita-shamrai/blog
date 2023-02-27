@@ -12,9 +12,6 @@ import lombok.*;
 @AllArgsConstructor
 public class Role {
 
-    /*@Id
-    private String name;*/
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

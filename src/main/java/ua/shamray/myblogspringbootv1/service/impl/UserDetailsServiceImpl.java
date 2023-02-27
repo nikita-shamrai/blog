@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import ua.shamray.myblogspringbootv1.entity.Account;
 import ua.shamray.myblogspringbootv1.security.MyUser;
 import ua.shamray.myblogspringbootv1.service.AccountService;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
