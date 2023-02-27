@@ -1,8 +1,6 @@
 package ua.shamray.myblogspringbootv1.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -14,9 +12,14 @@ import lombok.*;
 @AllArgsConstructor
 public class Role {
 
-    @Id
-    @Column(length = 16)
-    private String name;
+    /*@Id
+    private String name;*/
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Enumerated(EnumType.STRING)
+    private RoleType name;
 
 }

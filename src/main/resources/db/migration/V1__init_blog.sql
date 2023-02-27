@@ -14,8 +14,8 @@ create table account
 create table account_role
 (
     account_id bigint      not null,
-    role_name  varchar(16) not null,
-    primary key (account_id, role_name)
+    role_id    bigint      not null,
+    primary key (account_id, role_id)
 );
 create table post
 (
@@ -29,11 +29,12 @@ create table post
 );
 create table role
 (
+    id   bigint not null auto_increment,
     name varchar(16) not null,
-    primary key (name)
+    primary key (id)
 );
 alter table account_role
-    add constraint `role_name_fk_1` foreign key (role_name) references role (name);
+    add constraint `role_id_fk_1` foreign key (role_id) references role (id);
 alter table account_role
     add constraint `account_id_fk_1` foreign key (account_id) references account (id)
         ON DELETE CASCADE;

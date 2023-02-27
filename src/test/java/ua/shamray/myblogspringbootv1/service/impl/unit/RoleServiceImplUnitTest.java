@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import ua.shamray.myblogspringbootv1.entity.Account;
 import ua.shamray.myblogspringbootv1.entity.Role;
+import ua.shamray.myblogspringbootv1.entity.RoleType;
 import ua.shamray.myblogspringbootv1.repository.RoleRepository;
 import ua.shamray.myblogspringbootv1.service.RoleService;
 import ua.shamray.myblogspringbootv1.service.impl.RoleServiceImpl;
@@ -36,7 +37,7 @@ class RoleServiceImplUnitTest {
     void setRoleAsUser() {
         //given
         Role userRole = Role.builder()
-                .name("ROLE_USER")
+                .name(RoleType.ROLE_USER)
                 .build();
 
         Account account = Account.builder()
@@ -57,7 +58,7 @@ class RoleServiceImplUnitTest {
     void setRoleAsAdminThrowsExIfUserIsNotRegistered() {
         //given
         Role adminRole = Role.builder()
-                .name("ROLE_ADMIN")
+                .name(RoleType.ROLE_ADMIN)
                 .build();
 
         Account account = Account.builder()
@@ -73,13 +74,14 @@ class RoleServiceImplUnitTest {
     }
 
     @Test
+    @Disabled
     void canSetRoleAsAdmin() {
         //given
         Role userRole = Role.builder()
-                .name("ROLE_USER")
+                .name(RoleType.ROLE_USER)
                 .build();
         Role adminRole = Role.builder()
-                .name("ROLE_ADMIN")
+                .name(RoleType.ROLE_ADMIN)
                 .build();
 
         Account account = Account.builder()

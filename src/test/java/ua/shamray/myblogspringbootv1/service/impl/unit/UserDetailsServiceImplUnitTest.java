@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import ua.shamray.myblogspringbootv1.entity.Account;
 import ua.shamray.myblogspringbootv1.entity.Role;
+import ua.shamray.myblogspringbootv1.entity.RoleType;
 import ua.shamray.myblogspringbootv1.service.AccountService;
 import ua.shamray.myblogspringbootv1.service.impl.UserDetailsServiceImpl;
 
@@ -44,9 +45,7 @@ class UserDetailsServiceImplUnitTest {
                 .lastName("lastName")
                 .password("password")
                 .email("findMe@mail.com")
-                .roles(Set.of(Role.builder()
-                        .name("ROLE_USER")
-                        .build()))
+                .roles(Set.of(Role.builder().name(RoleType.ROLE_USER).build()))
                 .build();
         UserDetails userDetails = User.builder()
                 .username(account.getEmail())

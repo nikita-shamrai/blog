@@ -25,12 +25,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Account> optionalAccount = accountService.findByEmail(username);
         Account account = optionalAccount.orElseThrow(() -> {
-            throw new EntityNotFoundException("Email " + username + " not found.");
+            throw new EntityNotFoundException(String.format("Email %s not found.", username));
         });
         List<GrantedAuthority> grantedAuthorities = account
                 .getRoles()
                 .stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .collect(Collectors.toList());
         return new MyUser(account.getEmail(), account.getPassword(), grantedAuthorities, account.getId());
     }

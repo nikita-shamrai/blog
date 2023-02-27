@@ -37,7 +37,7 @@ public class Account {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "account_role",
             joinColumns = {@JoinColumn(name = "account_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_name", referencedColumnName = "name")})
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     @Cascade(org.hibernate.annotations.CascadeType.DETACH)
     private Set<Role> roles = new HashSet<>();
 
