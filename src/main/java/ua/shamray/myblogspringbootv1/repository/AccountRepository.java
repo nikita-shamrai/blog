@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 import ua.shamray.myblogspringbootv1.entity.Account;
 import java.util.Optional;
 
-@Repository
 public interface AccountRepository extends JpaRepository<Account, Long> {
     Optional<Account> findByEmail(String email);
 

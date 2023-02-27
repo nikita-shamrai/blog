@@ -7,7 +7,6 @@ import ua.shamray.myblogspringbootv1.entity.RoleType;
 
 import java.util.Optional;
 
-@Repository
 public interface RoleRepository extends JpaRepository<Role, String> {
 
     Optional<Role> findByName(RoleType name);

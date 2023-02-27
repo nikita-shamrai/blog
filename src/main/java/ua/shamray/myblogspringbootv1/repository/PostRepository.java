@@ -8,7 +8,6 @@ import ua.shamray.myblogspringbootv1.entity.Post;
 
 import java.util.List;
 
-@Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("select p from Post p where p.account.id = :id")
     List<Post> findPostsByAccountID(@Param("id") Long id);
