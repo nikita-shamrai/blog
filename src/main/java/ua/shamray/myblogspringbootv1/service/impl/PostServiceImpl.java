@@ -3,6 +3,7 @@ package ua.shamray.myblogspringbootv1.service.impl;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.shamray.myblogspringbootv1.dto.PostDTO;
 import ua.shamray.myblogspringbootv1.mapper.PostMapper;
 import ua.shamray.myblogspringbootv1.entity.Account;

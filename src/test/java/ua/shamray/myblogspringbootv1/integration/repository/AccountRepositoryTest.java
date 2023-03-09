@@ -1,10 +1,11 @@
-package ua.shamray.myblogspringbootv1.repository;
+package ua.shamray.myblogspringbootv1.integration.repository;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import ua.shamray.myblogspringbootv1.entity.Account;
+import ua.shamray.myblogspringbootv1.repository.AccountRepository;
 
 import java.util.Optional;
 
@@ -22,7 +23,7 @@ class AccountRepositoryTest {
     }
 
     @Test
-    void itShouldFindAccountByEmail() {
+    void findByEmail_shouldFindAccountByEmail() {
         //given
         Account account = Account.builder()
                 .firstName("firstName")
@@ -34,6 +35,8 @@ class AccountRepositoryTest {
         //when
         Optional<Account> expected = accountRepository.findByEmail("findMe@mail.com");
         //then
-        assertThat(expected.orElseThrow()).isEqualTo(account);
+        assertThat(expected.isPresent()).isTrue();
+        assertThat(expected.get()).isEqualTo(account);
     }
+
 }

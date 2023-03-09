@@ -6,13 +6,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ua.shamray.myblogspringbootv1.dto.AccountDTO;
 import ua.shamray.myblogspringbootv1.mapper.AccountMapper;
 import ua.shamray.myblogspringbootv1.entity.Account;
 import ua.shamray.myblogspringbootv1.repository.AccountRepository;
 import ua.shamray.myblogspringbootv1.service.AccountService;
 import ua.shamray.myblogspringbootv1.service.RoleService;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,6 +24,7 @@ public class AccountServiceImpl implements AccountService {
     private final AccountMapper accountMapper;
 
     @Override
+    @Transactional
     public AccountDTO saveNewUser(AccountDTO accountDTO) {
         accountRepository
                 .findByEmail(accountDTO.getEmail())
@@ -40,6 +41,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
+    @Transactional
     public void setUserAsAdmin(Account account) {
         accountRepository
                 .findById(account.getId())

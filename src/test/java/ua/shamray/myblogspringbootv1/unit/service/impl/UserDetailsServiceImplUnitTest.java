@@ -1,15 +1,14 @@
-package ua.shamray.myblogspringbootv1.service.impl.unit;
+package ua.shamray.myblogspringbootv1.unit.service.impl;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import ua.shamray.myblogspringbootv1.entity.Account;
 import ua.shamray.myblogspringbootv1.entity.Role;
 import ua.shamray.myblogspringbootv1.entity.RoleType;
@@ -21,26 +20,23 @@ import java.util.Optional;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest(properties = "command.line.runner.enabled=false")
+@ExtendWith(MockitoExtension.class)
 class UserDetailsServiceImplUnitTest {
 
-    @MockBean
+    @Mock
     private AccountService accountService;
-    private UserDetailsService myUserDetailsService;
+    @InjectMocks
+    private UserDetailsServiceImpl myUserDetailsService;
 
-    @BeforeEach
-    void setUp() {
-        myUserDetailsService = new UserDetailsServiceImpl(accountService);
-    }
-
-    //Do I need to test Throws in Optional?
     @Test
-    @Disabled
-    void canCreateNewSecurityUserByUsername() {
+    void loadUserByUsername_canCreateNewSecurityUserByUsername() {
         //given
         Account account = Account.builder()
+                .id(1L)
                 .firstName("firstName")
                 .lastName("lastName")
                 .password("password")
@@ -52,11 +48,23 @@ class UserDetailsServiceImplUnitTest {
                 .password(account.getPassword())
                 .authorities(List.of(new SimpleGrantedAuthority("ROLE_USER")))
                 .build();
-        //when
         when(accountService.findByEmail(account.getEmail())).thenReturn(Optional.of(account));
+
+        //when
         UserDetails loadUserByUsername = myUserDetailsService.loadUserByUsername(account.getEmail());
+
         //then
         assertThat(loadUserByUsername).isEqualTo(userDetails);
+    }
+
+    @Test
+    public void loadUserByUsername_throwsEntityNotFoundException() {
+        // given
+        when(accountService.findByEmail(anyString())).thenReturn(Optional.empty());
+
+        // when & then
+        assertThrows(EntityNotFoundException.class,
+                () -> myUserDetailsService.loadUserByUsername("test"));
     }
 
 }
