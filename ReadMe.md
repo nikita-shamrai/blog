@@ -37,6 +37,30 @@ mvn spring-boot:run
 ```
 **The app will start running at <http://localhost:8080>**
 
+## Things to start with
+After first successful launch of the application, the FlyWay database migration
+will fill the tables with data. You will find 3 accounts and 2 posts.
+
+Account #1 is author of Post #1
+```
+Account #1
+login: user1@mail.com
+pass: password
+```
+Account #2 is author of Post #2
+```
+Account #2
+login: user2@mail.com
+pass: password
+```
+Account #3 is an Admin
+```
+Account #3
+login: admin1@mail.com
+pass: password
+```
+You can **use them to test the application** functionality.
+
 ## Explore Rest APIs
 
 The app defines following CRUD APIs.
