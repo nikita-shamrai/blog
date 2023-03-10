@@ -23,6 +23,7 @@ create database my_blog
 
 + open `src/main/resources/application.properties`
 + change `spring.datasource.username` and `spring.datasource.password` as per your mysql installation
++ make sure you use proper `spring.datasource.url` 
 
 ## How to Run
 
