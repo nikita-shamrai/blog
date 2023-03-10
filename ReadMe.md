@@ -10,7 +10,7 @@ Admins can perform CRUD operations on all users posts.
 **1. Clone the application**
 
 ```bash
-git clone https://github.com/gamlethot/my-blog-springboot-v1.git
+git clone https://github.com/nikita-shamrai/my-blog-springboot-v1.git
 ```
 
 **2. Create Mysql database**
