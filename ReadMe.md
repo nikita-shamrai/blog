@@ -109,7 +109,7 @@ to access endpoints that require logged-in user
 ##### <a id="postupdate">Update Post -> /blog/posts/edit/{id}</a>
 ```json
 {
-	"title": "Updated Title",
-	"body": "Updated Body "
+  "title": "Updated Title",
+  "body": "Updated Body "
 }
 ```
