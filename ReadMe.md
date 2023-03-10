@@ -2,7 +2,7 @@
 *Technologies used in project:*
 **Spring Boot 3, Spring Security, MySQL, Spring Data JPA, FlyWay, MapStruct**
 
-This is a simple Blog rest API project, that allows you to view all users posts, create personal account and perform CRUD operations with your own posts.
+Blog rest API project, that allows you to view all users posts, create personal account and perform CRUD operations with your own posts.
 Admins can perform CRUD operations on all users posts.
 
 ## Steps to Setup
