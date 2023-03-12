@@ -5,6 +5,9 @@
 Blog rest API project, that allows you to view all users posts, create personal account and perform CRUD operations with your own posts.
 Admins can perform CRUD operations on all users posts.
 
+## Tests Coverage Result
+![test_coverage](coverage_summary.PNG)
+
 ## Steps to Setup
 
 **1. Clone the application**
