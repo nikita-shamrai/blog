@@ -19,6 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/blog/posts")
 public class PostController {
+
     private final PostService postService;
     private final AuthenticationService authenticationService;
 

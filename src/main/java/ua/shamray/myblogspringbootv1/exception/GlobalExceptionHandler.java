@@ -5,16 +5,13 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.expression.AccessException;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,7 +47,7 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(apiException, httpStatus);
     }
 
-   //This handler is to extract only "default message" from full error message in validation
+   //This handler is to extract only "default message" from full error message in validation of NotBlank etc.
    @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     public ResponseEntity<?> handleMethodArgumentNotValid(MethodArgumentNotValidException e){
         HttpStatus httpStatus = HttpStatus.NOT_ACCEPTABLE;

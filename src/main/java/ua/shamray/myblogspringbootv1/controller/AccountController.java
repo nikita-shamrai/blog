@@ -11,6 +11,7 @@ import ua.shamray.myblogspringbootv1.service.AccountService;
 @RequiredArgsConstructor
 @RequestMapping("/blog")
 public class AccountController {
+
     private final AccountService accountService;
 
     @PostMapping("/register")
@@ -18,5 +19,6 @@ public class AccountController {
         AccountDTO newUser = accountService.saveNewUser(accountDTO);
         return ResponseEntity.ok(newUser);
     }
+
 
 }

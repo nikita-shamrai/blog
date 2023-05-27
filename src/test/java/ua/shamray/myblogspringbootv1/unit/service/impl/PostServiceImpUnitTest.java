@@ -8,7 +8,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ua.shamray.myblogspringbootv1.dto.AccountViewer;
 import ua.shamray.myblogspringbootv1.dto.PostDTO;
@@ -33,7 +32,7 @@ import static org.mockito.Mockito.*;
 class PostServiceImpUnitTest {
     @Mock
     private PostRepository postRepository;
-    @Spy
+    @Mock
     private PostMapper postMapper;
     @InjectMocks
     private PostServiceImpl postService;
@@ -41,7 +40,7 @@ class PostServiceImpUnitTest {
     private Post post2;
     private PostDTO post1DTO;
     private PostDTO post2DTO;
-    private  Account account;
+    private Account account;
 
     @BeforeEach
     void setUp() {

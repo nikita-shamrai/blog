@@ -105,7 +105,7 @@ class AccountServiceImplITTest {
     @Test
     @WithMockUser(username = "findMe@mail.com", authorities = "ROLE_USER")
     void getCurrentAuthenticatedAccount_ReturnsAccount_ForAuthenticatedUser() {
-        //when
+        //given
         Role userRole = roleRepository.findByRoleType(RoleType.ROLE_USER).get();
         Account account = Account.builder()
                 .firstName("firstName")
@@ -115,7 +115,7 @@ class AccountServiceImplITTest {
                 .roles(new HashSet<>(List.of(userRole)))
                 .build();
         accountRepository.save(account);
-
+        //when
         Account result = accountService.getCurrentAuthenticatedAccount();
         //then
         assertNotNull(result);

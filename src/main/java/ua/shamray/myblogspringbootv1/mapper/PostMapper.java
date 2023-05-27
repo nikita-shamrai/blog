@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ua.shamray.myblogspringbootv1.dto.PostDTO;
 import ua.shamray.myblogspringbootv1.entity.Post;
 
-@Mapper(componentModel = "spring", uses = AccountMapper.class,
+@Mapper(componentModel = "spring",
         injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public abstract class PostMapper {
 

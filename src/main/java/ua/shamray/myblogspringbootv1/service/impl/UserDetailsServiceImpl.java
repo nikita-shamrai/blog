@@ -15,17 +15,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Component("userDetailsService")
+@Component
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
+
     private final AccountService accountService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Account> optionalAccount = accountService.findByEmail(username);
-        Account account = optionalAccount.orElseThrow(() -> {
-            throw new EntityNotFoundException(String.format("Email %s not found.", username));
-        });
+        Account account = optionalAccount.orElseThrow(() -> new EntityNotFoundException(String.format("Email %s not found.", username)));
         List<GrantedAuthority> grantedAuthorities = account
                 .getRoles()
                 .stream()

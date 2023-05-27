@@ -90,7 +90,7 @@ to access endpoints that require logged-in user
 | DELETE | /blog/posts/delete/{id} | Delete post (If post belongs to logged-in user or logged in user is admin) | |
 
 
-## Sample Valid JSON Request Bodys
+## Sample Valid JSON Request Body's
 
 ##### <a id="signup">Sign Up -> /blog/register</a>
 ```json
